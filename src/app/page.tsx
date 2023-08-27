@@ -28,17 +28,17 @@ export default function Home() {
                 {
                     platformName: "Window 64bit Installer",
                     fileName: "Godgon-0.0.1-dev.exe",
-                    url: "/"
+                    url: "/apps/godgon-0.0.1-dev.exe"
                 },
                 {
                     platformName: "Window 64bit Zip",
                     fileName: "Godgon-0.0.1-dev.zip",
-                    url: "/"
+                    url: "/apps/godgon-0.0.1-dev.zip"
                 },
                 {
                     platformName: "Android",
                     fileName: "Godgon-0.0.1-dev.apk",
-                    url: "/"
+                    url: "/apps/godgon-0.0.1-dev.apk"
                 }
             ]} />
         </main>
