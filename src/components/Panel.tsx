@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { timeToString } from '@/util/util';
-import Link from 'next/link';
+import widebg from "@/images/widebg.jpg";
 
 function Panel(){
     const [time, setTime] = useState(new Date());
@@ -19,9 +19,7 @@ function Panel(){
 
     return (
         <div className='relative'>
-            <Image alt='sidebg' src="/widebg.jpg"
-                width={0} height={0} sizes='100vw' className='h-full w-auto'
-            />
+            <Image alt='sidebg' src={widebg} priority/>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
                 flex flex-col items-center'>
                 <span className='font-bold text-xl text-main-2 mb-3'>

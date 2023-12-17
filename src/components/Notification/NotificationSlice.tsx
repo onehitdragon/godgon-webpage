@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image"
 import { useEffect, useState } from "react";
+import notifi from "@/images/ui/notifi.png";
 
 function NotificationSlice(){
     const texts = [
@@ -32,9 +33,9 @@ function NotificationSlice(){
     }, [curTextIndex])
 
     return (
-        <div className='flex items-center ml-3 '>
-            <Image src={"/ui/notifi.png"} width={25} height={25} alt='notifi.png'/>
-            <div className='w-56 overflow-hidden'>
+        <div className='flex items-center'>
+            <Image src={notifi} className="w-6 h-6" alt='notifi.png'/>
+            <div className='w-36 sm:w-56 overflow-hidden'>
                 <span className="whitespace-nowrap text-sm block italic"
                 style={{ transform: `translate(${x}px, 0px)` }}>
                     {texts[curTextIndex]}
