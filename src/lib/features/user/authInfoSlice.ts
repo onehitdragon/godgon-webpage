@@ -17,9 +17,13 @@ const authInfoSlice = createSlice({
         updateAuthInfo: (state, action: { payload: Required<AuthInfoState> }) => {
             state.account = action.payload.account;
             state.token = action.payload.token;
+        },
+        removeAuthInfo: (state) => {
+            state.account = undefined;
+            state.token = undefined;
         }
     }
 });
 
 export const authInfoReducer = authInfoSlice.reducer;
-export const { updateAuthInfo } = authInfoSlice.actions;
+export const { updateAuthInfo, removeAuthInfo } = authInfoSlice.actions;

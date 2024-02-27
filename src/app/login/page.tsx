@@ -2,8 +2,10 @@
 
 import { updateDialog } from "@/lib/features/dialog/dialogSlice";
 import { loginThunkAction } from "@/lib/features/user/authInfoAction";
-import { useAppDispatch } from "@/lib/hook";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useCookies } from 'react-cookie';
 
 function Login(){
     const [isShowPass, setIsShowPass] = useState(false);
@@ -11,6 +13,9 @@ function Login(){
     const [password, setPassword] = useState("");
     const dispatch = useAppDispatch();
     const [logining, setLogining] = useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const account = useAppSelector(state => state.authInfo.account);
+    const router = useRouter();
 
     const loginHandler = () => {
         setLogining(true);
@@ -25,11 +30,18 @@ function Login(){
                     type: "info"
                 }));
             },
-            () => {
+            (res) => {
+                setCookie("auth_info", res, { secure: false, sameSite: "strict" });
                 setLogining(false);
             }
         ));
     }
+
+    useEffect(() => {
+        if(account){
+            router.replace("/");
+        }
+    }, [account])
 
     return (
         <main className="flex justify-center">

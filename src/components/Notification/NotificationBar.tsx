@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import NotificationSlice from '@/components/Notification/NotificationSlice';
 import logo from "@/images/logo.png";
-import human1 from "@/images/ui/human-1.png";
-import Link from 'next/link';
+import LoginButton from './LoginButton';
 
 function NotificationBar(){
     return (
@@ -13,15 +12,7 @@ function NotificationBar(){
                 />
                 <NotificationSlice />
             </div>
-            <Link href="/login">
-                <button className='hover:brightness-95 transition
-                    bg-main-2 py-1 px-3 relative'>
-                    <span className='text-white'>Đăng nhập</span>
-                    <Image src={human1} alt='human-1.png'
-                        className='absolute top-1/2 -translate-y-1/2 -translate-x-2/3 w-20 sm:w-28'
-                    />
-                </button>
-            </Link>
+            <LoginButton />
         </div>
     );
 }

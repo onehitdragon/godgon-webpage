@@ -19,7 +19,7 @@ function Panel(){
 
     return (
         <div className='relative'>
-            <Image alt='sidebg' src={widebg} priority/>
+            <Image alt='sidebg' src={widebg} priority placeholder='blur'/>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
                 flex flex-col items-center'>
                 <span className='font-bold text-xl text-main-2 mb-3'>

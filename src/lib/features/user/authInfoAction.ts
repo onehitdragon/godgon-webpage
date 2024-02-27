@@ -3,19 +3,21 @@ import { ThunkAction } from "@reduxjs/toolkit";
 import { z } from "zod";
 import { updateAuthInfo } from "./authInfoSlice";
 
+const authInfoSchema = z.object({
+    account: z.object({
+        id: z.string(),
+        username: z.string()
+    }),
+    token: z.string()
+})
 const resBodyLoginSchema = z.object({
-    content: z.object({
-        account: z.object({
-            id: z.string(),
-            username: z.string()
-        }),
-        token: z.string()
-    })
+    content: authInfoSchema
 });
+type AuthInfo = z.infer<typeof authInfoSchema>;
 type ResBodyLogin = z.infer<typeof resBodyLoginSchema>;
 
 const loginThunkAction = (
-    username: string, password: string, onFail: (mes: string) => void, onSuccess: () => void
+    username: string, password: string, onFail: (mes: string) => void, onSuccess: (authInfo: AuthInfo) => void
 ) => {
     const thunk: ThunkAction<void, RootState, any, any> = async (dispatch, getState) => {
         const reqBody = {
@@ -39,14 +41,14 @@ const loginThunkAction = (
             onFail("Server maintaining...");
         }
         if(res.status == 200){
-            const resBody = await res.json();
-            const validate = resBodyLoginSchema.safeParse(resBody);
+            const validate = resBodyLoginSchema.safeParse(await res.json());
             if(validate.success){
-                dispatch(updateAuthInfo(validate.data.content));
-                onSuccess();
+                const resBodyLogin = validate.data;
+                dispatch(updateAuthInfo(resBodyLogin.content));
+                onSuccess(resBodyLogin.content);
             }
             else{
-                onFail("Server respon dont map with client request")
+                onFail("Server's response dont map with client request")
             }
         }
     }
@@ -54,4 +56,15 @@ const loginThunkAction = (
     return thunk;
 }
 
-export { loginThunkAction };
+const updateAuthInfoThunkAction = (data: any) => {
+    const thunk: ThunkAction<void, RootState, any, any> = async (dispatch, getState) => {
+        const validate = authInfoSchema.safeParse(data);
+        if(validate.success){
+            dispatch(updateAuthInfo(validate.data))
+        }
+    }
+
+    return thunk;
+}
+
+export { loginThunkAction, updateAuthInfoThunkAction };
