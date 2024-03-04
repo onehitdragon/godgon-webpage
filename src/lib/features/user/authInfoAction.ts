@@ -32,13 +32,13 @@ const loginThunkAction = (
             }
         });
         if(res.status == 400){
-            onFail("username or password invalidate");
+            onFail("Tài khoản hoặc mật khẩu không hợp lệ");
         }
         if(res.status == 401){
-            onFail("Wrong username or password");
+            onFail("Sai tài khoản hoặc mật khẩu");
         }
         if(res.status == 500){
-            onFail("Server maintaining...");
+            onFail("Máy chủ bảo trì...");
         }
         if(res.status == 200){
             const validate = resBodyLoginSchema.safeParse(await res.json());
@@ -67,4 +67,33 @@ const updateAuthInfoThunkAction = (data: any) => {
     return thunk;
 }
 
-export { loginThunkAction, updateAuthInfoThunkAction };
+const registerThunkAction = (
+    username: string, password: string, onFail: (mes: string) => void, onSuccess: () => void
+) => {
+    const thunk: ThunkAction<void, RootState, any, any> = async (dispatch, getState) => {
+        const reqBody = {
+            username,
+            password
+        };
+        const res = await fetch("/api/auth/register", {
+            method: "POST",
+            body: JSON.stringify(reqBody),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        if(res.status == 409){
+            onFail("Tên tài khoản đã tồn tại");
+        }
+        if(res.status == 500){
+            onFail("Máy chủ bảo trì...");
+        }
+        if(res.status == 200){
+            onSuccess();
+        }
+    }
+
+    return thunk;
+}
+
+export { loginThunkAction, updateAuthInfoThunkAction, registerThunkAction };

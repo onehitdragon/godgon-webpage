@@ -45,9 +45,27 @@ function Dialog(){
                 <p className="text-center pt-2 uppercase font-medium text-main-2">Thông báo</p>
                 <div className="flex">
                     <Image src={dialogAgrent} alt="dialogAgrent" className="h-fit"/>
-                    <p className="p-3 pl-0 text-sm text-red-600">
-                        {mes}
-                    </p>
+                    {
+                        dialogData.type === "info"
+                        &&
+                        <p className="p-3 pl-0 text-sm text-green-600">
+                            {mes}
+                        </p>
+                    }
+                    {
+                        dialogData.type === "warn"
+                        &&
+                        <p className="p-3 pl-0 text-sm text-yellow-600">
+                            {mes}
+                        </p>
+                    }
+                    {
+                        dialogData.type === "error"
+                        &&
+                        <p className="p-3 pl-0 text-sm text-red-600">
+                            {mes}
+                        </p>
+                    }
                 </div>
                 <div className="mt-auto flex justify-evenly">
                     <button

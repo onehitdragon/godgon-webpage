@@ -27,11 +27,11 @@ function Login(){
                 dispatch(updateDialog({
                     isOpen: true,
                     message: mes,
-                    type: "info"
+                    type: "error"
                 }));
             },
             (res) => {
-                setCookie("auth_info", res, { secure: false, sameSite: "strict" });
+                setCookie("auth_info", res, { secure: false, sameSite: "strict" }); // need change when deloy
                 setLogining(false);
             }
         ));
